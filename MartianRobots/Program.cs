@@ -14,32 +14,44 @@ class Program
         bool isGridValid;
         var worldCoordinates = String.Empty;
 
-
-        var marsGrid = Console.ReadLine();
-        var grid = Array.ConvertAll(marsGrid.Split(' '), int.Parse);
-
         do
         {
             Console.WriteLine("TYPE MARS WORLD COORDINATES. ( Input example: 15 50. The maximum value for coordinates are  (" + GridCoordinateYMax + "," + GridCoordinateYMax + "))");
+
+            // Validate grid coordinates.
             worldCoordinates = Console.ReadLine().Trim();
             isGridValid = ValidationHelper.ValidateGridCoordinate(worldCoordinates);
         }
         while (!isGridValid);
 
+        var grid = Array.ConvertAll(worldCoordinates.Split(' '), int.Parse);
 
         while (true)
         {
-            var robotPosition = Console.ReadLine().Split(' ');
-            var coordinateX = int.Parse(robotPosition[0]);
-            var coordinateY = int.Parse(robotPosition[1]);
-            var orientation = robotPosition[2];
-            var instructions = Console.ReadLine();
+            try
+            {
+                // Get robotPosition and orientation.
+                var robotPosition = Console.ReadLine().Split(' ');
+                var coordinateX = int.Parse(robotPosition[0]);
+                var coordinateY = int.Parse(robotPosition[1]);
+                var orientation = robotPosition[2];
 
-            IRobot robot = new Robot(coordinateX, coordinateY, orientation, grid);
-            var result = robot.Execute(instructions);
+                // Initialise grid and robot position.
+                IRobot robot = new Robot(coordinateX, coordinateY, orientation, grid);
 
-            Console.WriteLine("Result: " + result.x + " " + result.y + " " + result.orientation);
+                // Get instructions.
+                var instructions = Console.ReadLine();
+
+                // Execute robot.
+                var result = robot.Execute(instructions);
+
+                Console.WriteLine("Result: " + result.x + " " + result.y + " " + result.orientation);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Result: " + ex.Message);
+            }
         }
     }
-    
+
 }
