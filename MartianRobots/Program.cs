@@ -13,8 +13,9 @@ class Program
         var instructions = Console.ReadLine();
 
         IRobot robot = new Robot(coordinateX, coordinateY, orientation, grid);
-        robot.Execute(instructions);    
-        Console.WriteLine("Result: ");
+        var result = robot.Execute(instructions);  
+        
+        Console.WriteLine("Result: " + result.Item1 + " " + result.Item2 + " " + result.Item3 );
 
     }
 }

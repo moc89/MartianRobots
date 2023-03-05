@@ -16,7 +16,7 @@ public class Robot : IRobot
         this.lostRobots = new List<(int, int, string)>();
     }
 
-    public void Execute(string instructions)
+    public Tuple<int, int, string> Execute(string instructions)
     {
         foreach (var instruction in instructions)
         {
@@ -33,6 +33,8 @@ public class Robot : IRobot
                 MoveForward();
             }
         };
+
+        return new Tuple<int,int, string>(x, y, orientation); 
     }
 
     public void MoveForward()

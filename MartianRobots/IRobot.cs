@@ -1,6 +1,6 @@
 ﻿public interface IRobot
 {
-    void Execute(string instructions);
+    Tuple<int, int, string> Execute(string instructions);
     void MoveForward();
     void TurnLeft();
     void TurnRight();
