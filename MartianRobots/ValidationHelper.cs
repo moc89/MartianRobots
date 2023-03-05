@@ -28,7 +28,9 @@ namespace MartianRobots
                 bool isXNumber = int.TryParse(gridCoordinatesTrimmed[0], out int coordinateX);
                 bool isYNumber = int.TryParse(gridCoordinatesTrimmed[1], out int coordinateY);
 
-                return isXNumber && isYNumber && coordinateY > GridCoordinateYMin && coordinateY <= GridCoordinateYMax;
+                return isXNumber && isYNumber &&
+                       coordinateY > GridCoordinateYMin && coordinateY <= GridCoordinateYMax &&
+                       coordinateX > GridCoordinateXMin && coordinateX <= GridCoordinateXMax;
             }
 
             return false;
