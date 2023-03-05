@@ -47,8 +47,22 @@ public class Robot : IRobot
             {"W", (-1, 0)}
         };
         var (dx, dy) = moves[orientation];
-        x = x + dx;
-        y = y + dy;
+        var newX = x + dx;
+        var newY = y + dy;
+        if (0 <= newX && newX <= grid[0] && 0 <= newY && newY <= grid[1])
+        {
+            x = newX;
+            y = newY;
+        }
+        else
+        {
+            var lostRobot = (x, y, orientation);
+            if (!lostRobots.Contains(lostRobot))
+            {
+                lostRobots.Add(lostRobot);
+                Console.WriteLine($"{x} {y} {orientation} LOST");
+            }
+        }
     }
 
     public void TurnLeft()
