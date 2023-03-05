@@ -18,7 +18,21 @@ public class Robot : IRobot
 
     public void Execute(string instructions)
     {
-        throw new NotImplementedException();
+        foreach (var instruction in instructions)
+        {
+            if (instruction == 'L')
+            {
+                TurnLeft();
+            }
+            else if (instruction == 'R')
+            {
+                TurnRight();
+            }
+            else if (instruction == 'F')
+            {
+                MoveForward();
+            }
+        };
     }
 
     public void MoveForward()
