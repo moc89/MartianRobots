@@ -37,7 +37,16 @@ public class Robot : IRobot
 
     public void MoveForward()
     {
-        throw new NotImplementedException();
+        var moves = new Dictionary<string, (int, int)>
+        {
+            {"N", (0, 1)},
+            {"E", (1, 0)},
+            {"S", (0, -1)},
+            {"W", (-1, 0)}
+        };
+        var (dx, dy) = moves[orientation];
+        x = x + dx;
+        y = y + dy;
     }
 
     public void TurnLeft()
