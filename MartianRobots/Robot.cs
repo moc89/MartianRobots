@@ -42,11 +42,25 @@ public class Robot : IRobot
 
     public void TurnLeft()
     {
-        throw new NotImplementedException();
+        var turns = new Dictionary<string, string>
+        {
+            {"N", "W"},
+            {"W", "S"},
+            {"S", "E"},
+            {"E", "N"}
+        };
+        orientation = turns[orientation];
     }
 
     public void TurnRight()
     {
-        throw new NotImplementedException();
+        var turns = new Dictionary<string, string>
+        {
+            {"N", "E"},
+            {"E", "S"},
+            {"S", "W"},
+            {"W", "N"}
+        };
+        orientation = turns[orientation];
     }
 }
