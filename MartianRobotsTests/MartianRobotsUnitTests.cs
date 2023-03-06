@@ -27,10 +27,10 @@ namespace MartianRobotsTests
             Assert.Equal(expectedOutput, combinedResult);
         }
 
-
         [Theory]
         [InlineData("5 3", "3 2 N", "FRRFLLFFRRFLL", "33N LOST")]
-        public void RobotHaveBeingLost(string gridInput, string robotInput, string instruction, string expectedOutput)
+        [InlineData("50 50", "50 50 S", "FFLFFFFFFF", "5048E LOST")]
+        public void RobotShouldMoveOfTheEdge(string gridInput, string robotInput, string instruction, string expectedOutput)
         {
             // Arrange
             var lostRobots = new List<(int, int, string)>();
@@ -51,6 +51,25 @@ namespace MartianRobotsTests
         [Theory]
         [InlineData("51 3", "1 1 E", "RFRFRFRF", "11E")]
         public void NoActionWhenGridIsNotValidated(string gridInput, string robotInput, string instruction, string expectedOutput)
+        {
+            // Arrange
+            var lostRobots = new List<(int, int, string)>();
+            var robotPositions = robotInput.Split(" ");
+            var grid = Array.ConvertAll(gridInput.Split(' '), int.Parse);
+
+            IRobot robot = new Robot(int.Parse(robotPositions[0]), int.Parse(robotPositions[1]), robotPositions[2], grid);
+
+            // Act
+            var result = robot.Execute(instruction);
+            var combinedResult = result.x.ToString() + result.y.ToString() + result.orientation;
+
+            // Assert
+            Assert.Equal(expectedOutput, combinedResult);
+        }
+
+        [Theory]
+        [InlineData("50 50", "1 1 S", "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", "11S")]
+        public void NoActionWhenInstructionLengthExceed(string gridInput, string robotInput, string instruction, string expectedOutput)
         {
             // Arrange
             var lostRobots = new List<(int, int, string)>();
