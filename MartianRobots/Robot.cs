@@ -1,4 +1,6 @@
 ﻿
+using MartianRobots;
+
 public class Robot : IRobot
 {
     private int x;
@@ -6,6 +8,7 @@ public class Robot : IRobot
     private string orientation;
     private readonly int[] grid;
     private readonly List<(int, int, string)> lostRobots;
+    private static bool isGridValid { get; set; }
 
     public Robot(int x, int y, string orientation, int[] grid)
     {
@@ -19,27 +22,32 @@ public class Robot : IRobot
     public (int x, int y, string orientation, bool isRobotLost) Execute(string instructions)
     {
         bool isRobotLost = false;
-        foreach (var instruction in instructions)
+        if (ValidationHelper.ValidateGridCoordinate(this.grid))
         {
-            if (instruction == 'L')
+            foreach (var instruction in instructions)
             {
-                TurnLeft();
-            }
-            else if (instruction == 'R')
-            {
-                TurnRight();
-            }
-            else if (instruction == 'F')
-            {
-                isRobotLost = MoveForward();
-            }
-            if (isRobotLost)
-            {
-                break;
-            }
-        };
+                if (instruction == 'L')
+                {
+                    TurnLeft();
+                }
+                else if (instruction == 'R')
+                {
+                    TurnRight();
+                }
+                else if (instruction == 'F')
+                {
+                    isRobotLost = MoveForward();
+                }
+                if (isRobotLost)
+                {
+                    break;
+                }
+            };
+        }
+        else Console.WriteLine("Grid is not valid");
 
-        return (x, y, orientation, isRobotLost); 
+
+        return (x, y, orientation, isRobotLost);
     }
 
     public bool MoveForward()
@@ -63,7 +71,7 @@ public class Robot : IRobot
         else
         {
             isRobotLost = true;
-            
+
             var lostRobot = (x, y, orientation);
             if (!lostRobots.Contains(lostRobot))
             {

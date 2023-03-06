@@ -35,5 +35,16 @@ namespace MartianRobots
 
             return false;
         }
+
+        public static bool ValidateGridCoordinate(int[] gridCoordinates)
+        {
+            if (gridCoordinates.Length != 2)
+            {
+               return false;
+            }
+
+            return  gridCoordinates[0] > 0 && gridCoordinates[0] <= 50 &&
+            gridCoordinates[1] > 0 && gridCoordinates[1] <= 50;
+        }
     }
 }
