@@ -48,5 +48,23 @@ namespace MartianRobotsTests
             Assert.Equal(expectedOutput, combinedResult);
         }
 
+        [Theory]
+        [InlineData("51 3", "1 1 E", "RFRFRFRF", "11E")]
+        public void NoActionWhenGridIsNotValidated(string gridInput, string robotInput, string instruction, string expectedOutput)
+        {
+            // Arrange
+            var lostRobots = new List<(int, int, string)>();
+            var robotPositions = robotInput.Split(" ");
+            var grid = Array.ConvertAll(gridInput.Split(' '), int.Parse);
+
+            IRobot robot = new Robot(int.Parse(robotPositions[0]), int.Parse(robotPositions[1]), robotPositions[2], grid);
+
+            // Act
+            var result = robot.Execute(instruction);
+            var combinedResult = result.x.ToString() + result.y.ToString() + result.orientation;
+
+            // Assert
+            Assert.Equal(expectedOutput, combinedResult);
+        }
     }
 }
