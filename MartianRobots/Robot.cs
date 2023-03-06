@@ -19,6 +19,30 @@ public class Robot : IRobot
         this.lostRobots = new List<(int, int, string)>();
     }
 
+    private static readonly Dictionary<string, string> LeftTurns = new Dictionary<string, string>
+    {
+        {"N", "W"},
+        {"W", "S"},
+        {"S", "E"},
+        {"E", "N"}
+    };
+
+    private static readonly Dictionary<string, string> RightTurns = new Dictionary<string, string>
+    {
+        {"N", "E"},
+        {"E", "S"},
+        {"S", "W"},
+        {"W", "N"}
+    };
+
+    private static readonly Dictionary<string, (int, int)> Moves = new Dictionary<string, (int, int)>
+    {
+        {"N", (0, 1)},
+        {"E", (1, 0)},
+        {"S", (0, -1)},
+        {"W", (-1, 0)}
+    };
+
     public (int x, int y, string orientation, bool isRobotLost) Execute(string instructions)
     {
         if (instructions.Length > 100)
@@ -60,14 +84,7 @@ public class Robot : IRobot
     public bool MoveForward()
     {
         bool isRobotLost = false;
-        var moves = new Dictionary<string, (int, int)>
-        {
-            {"N", (0, 1)},
-            {"E", (1, 0)},
-            {"S", (0, -1)},
-            {"W", (-1, 0)}
-        };
-        var (dx, dy) = moves[orientation];
+        var (dx, dy) = Moves[orientation];
         var newX = x + dx;
         var newY = y + dy;
         if (0 <= newX && newX <= grid[0] && 0 <= newY && newY <= grid[1])
@@ -92,25 +109,11 @@ public class Robot : IRobot
 
     public void TurnLeft()
     {
-        var turns = new Dictionary<string, string>
-        {
-            {"N", "W"},
-            {"W", "S"},
-            {"S", "E"},
-            {"E", "N"}
-        };
-        orientation = turns[orientation];
+        orientation = LeftTurns[orientation];
     }
 
     public void TurnRight()
     {
-        var turns = new Dictionary<string, string>
-        {
-            {"N", "E"},
-            {"E", "S"},
-            {"S", "W"},
-            {"W", "N"}
-        };
-        orientation = turns[orientation];
+        orientation = RightTurns[orientation];
     }
 }
