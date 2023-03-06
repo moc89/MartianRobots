@@ -1,7 +1,7 @@
 ﻿public interface IRobot
 {
-    (int x, int y, string orientation) Execute(string instructions);
-    void MoveForward();
+    (int x, int y, string orientation, bool isRobotLost) Execute(string instructions);
+    bool MoveForward();
     void TurnLeft();
     void TurnRight();
 }

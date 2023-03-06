@@ -16,8 +16,9 @@ public class Robot : IRobot
         this.lostRobots = new List<(int, int, string)>();
     }
 
-    public (int x, int y, string orientation) Execute(string instructions)
+    public (int x, int y, string orientation, bool isRobotLost) Execute(string instructions)
     {
+        bool isRobotLost = false;
         foreach (var instruction in instructions)
         {
             if (instruction == 'L')
@@ -30,15 +31,20 @@ public class Robot : IRobot
             }
             else if (instruction == 'F')
             {
-                MoveForward();
+                isRobotLost = MoveForward();
+            }
+            if (isRobotLost)
+            {
+                break;
             }
         };
 
-        return (x, y, orientation); 
+        return (x, y, orientation, isRobotLost); 
     }
 
-    public void MoveForward()
+    public bool MoveForward()
     {
+        bool isRobotLost = false;
         var moves = new Dictionary<string, (int, int)>
         {
             {"N", (0, 1)},
@@ -56,6 +62,8 @@ public class Robot : IRobot
         }
         else
         {
+            isRobotLost = true;
+            
             var lostRobot = (x, y, orientation);
             if (!lostRobots.Contains(lostRobot))
             {
@@ -63,6 +71,8 @@ public class Robot : IRobot
                 Console.WriteLine($"{x} {y} {orientation} LOST");
             }
         }
+
+        return isRobotLost;
     }
 
     public void TurnLeft()

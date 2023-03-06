@@ -31,6 +31,8 @@ class Program
             try
             {
                 // Get robotPosition and orientation.
+                Console.WriteLine("--------------------------- ");
+                Console.WriteLine("TYPE ROBOT POSITION: ( INPUT EXAMPLE. : 2 3 N )");
                 var robotPosition = Console.ReadLine().Split(' ');
                 var coordinateX = int.Parse(robotPosition[0]);
                 var coordinateY = int.Parse(robotPosition[1]);
@@ -40,12 +42,14 @@ class Program
                 IRobot robot = new Robot(coordinateX, coordinateY, orientation, grid);
 
                 // Get instructions.
+                Console.WriteLine("TYPE INSTRUCTION: ( INPUT EXAMPLE: RFRFRFLR )");
                 var instructions = Console.ReadLine();
 
                 // Execute robot.
                 var result = robot.Execute(instructions);
 
-                Console.WriteLine("Result: " + result.x + " " + result.y + " " + result.orientation);
+                var lostMessage = result.isRobotLost ? "LOST" : string.Empty;
+                Console.WriteLine("Result: " + result.x + " " + result.y + " " + result.orientation + " " + lostMessage);
             }
             catch (Exception ex)
             {
