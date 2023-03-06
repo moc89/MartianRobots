@@ -69,6 +69,10 @@ public class Robot : IRobot
                 {
                     isRobotLost = MoveForward();
                 }
+                else 
+                {
+                    Console.WriteLine("Invalid instruction.");
+                }
                 if (isRobotLost)
                 {
                     break;
