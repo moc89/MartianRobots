@@ -45,6 +45,12 @@ class Program
                 Console.WriteLine("TYPE INSTRUCTION: ( INPUT EXAMPLE: RFRFRFLR )");
                 var instructions = Console.ReadLine();
 
+                if (instructions.Length > 100)
+                {
+                    Console.WriteLine("instructions length cannot be bigger than 100 character.");
+                    return;
+                }
+
                 // Execute robot.
                 var result = robot.Execute(instructions);
 

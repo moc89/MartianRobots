@@ -21,6 +21,13 @@ public class Robot : IRobot
 
     public (int x, int y, string orientation, bool isRobotLost) Execute(string instructions)
     {
+        if (instructions.Length > 100)
+        {
+            Console.WriteLine("instructions length cannot be bigger than 100 character.");
+
+            return (x, y, orientation, false);
+        }
+
         bool isRobotLost = false;
         if (ValidationHelper.ValidateGridCoordinate(this.grid))
         {
